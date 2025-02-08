@@ -1,25 +1,15 @@
-import axios from "axios";
+import fs from "fs";
+import path from "path";
 
-export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method Not Allowed" });
-  }
-
+export default function handler(req, res) {
   try {
-    const { query } = req.body;
+    const filePath = path.join(process.cwd(), "frontend/data/chatbotData.json"); // ✅ Correct file path
+    const jsonData = fs.readFileSync(filePath, "utf-8");
+    const data = JSON.parse(jsonData);
 
-    // Log the query being sent to the backend
-    console.log("Sending to backend:", { query });
-
-    // Replace localhost with deployed API URL if applicable
-    const backendResponse = await axios.post("http://localhost:8000/chatbot", { query });
-
-    // Log the response received from the backend
-    console.log("Received from backend:", backendResponse.data);
-
-    res.status(200).json({ response: backendResponse.data });
+    res.status(200).json(data);
   } catch (error) {
-    console.error("Chatbot API Error:", error);
-    res.status(500).json({ error: "Failed to fetch AI response" });
+    console.error("Error reading chatbot data:", error);
+    res.status(500).json({ error: "Failed to read chatbot data." });
   }
 }
