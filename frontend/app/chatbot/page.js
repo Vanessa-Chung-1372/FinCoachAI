@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import "./styles.css";
+import videoData from "../../data/chatbotData.json";
 
 export default function Chatbot() {
   const [query, setQuery] = useState("");
@@ -47,7 +48,7 @@ export default function Chatbot() {
 
   return (
     <div className="chatbot-container">
-      <h1 className="chatbot-title">AI Chatbot</h1>
+      <h1 className="chatbot-title">FinCoach AI</h1>
       <form className="chatbot-form" onSubmit={handleSubmit}>
         <input
           className="chatbot-input"
