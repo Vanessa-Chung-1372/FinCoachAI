@@ -1,10 +1,19 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./styles.css";
 
 export default function Chatbot() {
   const [query, setQuery] = useState("");
   const [response, setResponse] = useState([]);
+  //
+  const [notes, setNotes] = useState([]);
+  const [noteText, setNoteText] = useState("");
+
+  useEffect(() => {
+    // Load saved notes from local storage
+    const savedNotes = JSON.parse(localStorage.getItem("notes")) || [];
+    setNotes(savedNotes);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,6 +52,21 @@ export default function Chatbot() {
       setResponse([{ video_title: "Error fetching response", youtube_link: "", summary: "Please try again later." }]);
     }
   };
+  //
+  const handleNoteSubmit = (e) => {
+    e.preventDefault();
+    const newNotes = [...notes, noteText];
+    setNotes(newNotes);
+    setNoteText("");
+    localStorage.setItem("notes", JSON.stringify(newNotes));
+  };
+
+  const handleNoteDelete = (index) => {
+    const newNotes = notes.filter((_, i) => i !== index);
+    setNotes(newNotes);
+    localStorage.setItem("notes", JSON.stringify(newNotes));
+  };
+  //
 
   return (
     <div className="chatbot-container">
@@ -74,6 +98,26 @@ export default function Chatbot() {
         ) : (
           <p>No videos found.</p>
         )}
+      </div>
+      <div className="note-taker">
+        <h2 className="note-taker-title">Notes</h2>
+        <form className="note-form" onSubmit={handleNoteSubmit}>
+          <textarea
+            className="note-input"
+            value={noteText}
+            onChange={(e) => setNoteText(e.target.value)}
+            placeholder="Write your notes here..."
+          />
+          <button className="note-button" type="submit">Save Note</button>
+        </form>
+        <div className="notes-list">
+          {notes.map((note, index) => (
+            <div key={index} className="note-card">
+              <p>{note}</p>
+              <button className="delete-note-button" onClick={() => handleNoteDelete(index)}>Delete</button>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
