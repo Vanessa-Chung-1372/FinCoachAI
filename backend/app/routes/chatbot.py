@@ -1,14 +1,18 @@
 from fastapi import APIRouter
 from app.services.ai import classify_topic, summarize_video
+from pydantic import BaseModel
+
+class TranscriptRequest(BaseModel):
+    transcript: str
 
 router = APIRouter()
 
 @router.post("/classify")
-def classify(transcript: str):
-    category = classify_topic(transcript)
+def classify(request: TranscriptRequest):
+    category = classify_topic(request.transcript)
     return {"category": category}
 
 @router.post("/summarize")
-def summarize(transcript: str):
-    summary = summarize_video(transcript)
+def summarize(request: TranscriptRequest):
+    summary = summarize_video(request.transcript)
     return {"summary": summary}

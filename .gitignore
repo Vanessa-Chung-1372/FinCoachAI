@@ -1,0 +1,4 @@
+dev_key.json
+.env
+__pycache__/*
+node_modules/*
