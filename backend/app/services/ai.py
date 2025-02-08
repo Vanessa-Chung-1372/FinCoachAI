@@ -1,14 +1,18 @@
-import google.generativeai as genai
+from google import genai
 from app.config import settings
 
-genai.configure(api_key=settings.GEMINI_API_KEY)
+client = genai.Client(api_key=settings.GEMINI_API_KEY)
 
 def classify_topic(transcript):
-    prompt = f"Classify this financial transcript into a category:\n{transcript}"
-    model = genai.GenerativeModel("gemini-pro")
-    return model.generate_content(prompt).text
+    response = client.models.generate_content(
+        model="gemini-2.0-flash", 
+        contents=f"Classify this financial transcript into a category:\n{transcript}"
+    )
+    return response.text
 
 def summarize_video(transcript):
-    prompt = f"Summarize this financial video transcript:\n{transcript}"
-    model = genai.GenerativeModel("gemini-pro")
-    return model.generate_content(prompt).text
+    response = client.models.generate_content(
+        model="gemini-2.0-flash", 
+        contents=f"Summarize this financial video transcript:\n{transcript}"
+    )
+    return response.text
