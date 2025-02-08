@@ -2,7 +2,7 @@ from googleapiclient.discovery import build
 from youtube_transcript_api import YouTubeTranscriptApi
 from app.config import settings
 
-async def search_youtube_videos(query: str, max_results: int = 5, min_views: int = 1000):
+async def search_youtube_videos(query: str, max_results: int = 3, min_views: int = 1000):
     """Searches YouTube for videos matching the query and filters based on view count and relevance."""
     youtube = build("youtube", "v3", developerKey=settings.YOUTUBE_API_KEY)
     try:
@@ -37,6 +37,8 @@ async def search_youtube_videos(query: str, max_results: int = 5, min_views: int
                 view_count = int(video_details["items"][0]["statistics"]["viewCount"])
                 if view_count >= min_views:
                     filtered_videos.append(video)
+                if len(filtered_videos) >= max_results:
+                    break
             except Exception as e:
                 print(f"Could not fetch view count for video {video['video_id']}: {e}")
                 continue

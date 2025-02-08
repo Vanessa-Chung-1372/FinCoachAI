@@ -1,6 +1,8 @@
 "use client";
 import { useState } from "react";
 import axios from "axios";
+import fs from "fs";
+import path from "path";
 
 export default function Chatbot() {
   const [query, setQuery] = useState("");
@@ -9,18 +11,26 @@ export default function Chatbot() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:8000/chatbot", { query });
+      // const res = await axios.post("http://localhost:8000/chatbot", { query });
 
-      if (res.data && Array.isArray(res.data.response)) {
-        setResponse(res.data.response); // Store the array of objects
-      } else {
-        setResponse([{ video_title: "No response received", youtube_link: "", summary: "" }]);
-      }
+      const filePath = path.resolve(process.cwd(), "frontend/data/chatbotData.json");
+      const jsonData = fs.readFileSync(filePath, "utf-8");
+      const data = JSON.parse(jsonData);
+
+      setResponse(data);
+
+      // if (res.data && Array.isArray(res.data.response)) {
+      //   setResponse(res.data.response); // Store the array of objects
+      // } else {
+      //   setResponse([{ video_title: "No response received", youtube_link: "", summary: "" }]);
+      // }
     } catch (error) {
       console.error("Chatbot API error:", error);
       setResponse([{ video_title: "Error fetching response", youtube_link: "", summary: "" }]);
     }
   };
+
+  
 
   return (
     <div>

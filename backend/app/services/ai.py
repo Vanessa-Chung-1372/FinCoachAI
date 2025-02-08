@@ -30,7 +30,7 @@ async def summarize_video_from_youtube(query):
     """
     try:
         # 1. Search YouTube
-        videos = await search_youtube_videos(query, min_views=1000, max_results=3)
+        videos = await search_youtube_videos(query, max_results=3, min_views=1000)
 
         summaries = []
         for video in videos:
