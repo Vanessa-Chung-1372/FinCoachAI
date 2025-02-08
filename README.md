@@ -2,10 +2,24 @@
 
 ## How to Run the Project
 
-1. **Install dependencies**: Run `npm install` in the project root directory.
-2. **Start the backend server**: Ensure your backend server is running on `http://localhost:8000`.
-3. **Start the frontend server**: Run `npm run dev` in the `frontend` directory.
-4. **Access the application**: Open your browser and navigate to `http://localhost:3000`.
+1. Backend
+
+cd backend
+
+uvicorn app.main:app --reload
+
+Backend is running...
+
+2. Frontend
+
+Open a new terminal:
+
+cd frontend
+
+npm install
+
+npm run dev
+
 
 ## How run activate virtual environment
 Navigate to project root dir, then run:
