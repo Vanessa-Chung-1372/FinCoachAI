@@ -1,11 +1,6 @@
 "use client";
 import { useState } from "react";
-import axios from "axios";
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import videoData from "../../data/chatbotData.json";
-
-// Load API Key from environment variables
-const API_KEY = process.env.GEMINI_API_KEY;
+import "./styles.css";
 
 export default function Chatbot() {
   const [query, setQuery] = useState("");
@@ -15,65 +10,68 @@ export default function Chatbot() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setResponse(videoData); // Load video data into state
-      // const allSummaries = videoData.map((video) => video.summary).join("\n\n");
+      const res = [
+        {
+          video_title: "How to Invest for Beginners (2025)",
+          youtube_link: "https://www.youtube.com/watch?v=lNdOtlpmH5U",
+          summary: "Ali Abdaal explains why investing in index funds is the best approach for beginners."
+        },
+        {
+          video_title: "Investing for Beginners - How I Make Millions from Stocks (Full Guide)",
+          youtube_link: "https://www.youtube.com/watch?v=8Ij7A1VCB7I",
+          summary: "Mark Tilbury discusses how to invest in the stock market and why tax-advantaged accounts are crucial."
+        },
+        {
+          video_title: "How to Invest for Beginners in 2025",
+          youtube_link: "https://www.youtube.com/watch?v=Ay4fmZdZqJE",
+          summary: "Tilbury explores five investment options for beginners with $100, covering stocks, REITs, crypto, gold, and index funds."
+        },
+        {
+          video_title: "Can ChatGPT Answer Complex Investing and Retirement Questions?",
+          youtube_link: "https://www.youtube.com/watch?v=EUDgo5T7wBQ",
+          summary: "Rob Berger tests ChatGPT’s ability to answer tough investing and retirement questions."
+        },
+        {
+          video_title: "Build a Dynamic 3-Statement Financial Model From Scratch",
+          youtube_link: "https://www.youtube.com/watch?v=66WChsYJ8C4",
+          summary: "Kenji teaches how to build a three-statement financial model in Excel, using a lemonade stand as an example."
+        }
+      ];
 
-      // const prompt = `
-      //   Given the following video summaries about investing, create a concise and insightful overview.
-      //   Highlight key takeaways, common themes, and any actionable insights.
-
-      //   ${allSummaries}
-
-      //   Provide a clear summary suitable for a beginner.
-      // `;
-
-      // // Initialize Google Gemini AI
-      // const genAI = new GoogleGenerativeAI(API_KEY);
-      // const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-
-      // const result = await model.generateContent(prompt);
-      // const summaryText = await result.response.text(); // ✅ Properly await the response
-
-      // setAiSummary(summaryText); // ✅ Store AI summary in state
-
+      setResponse(res.slice(0, 5)); // Display only the top 5 videos
     } catch (error) {
       console.error("Chatbot API error:", error);
-      setAiSummary("Error generating summary.");
+      setResponse([{ video_title: "Error fetching response", youtube_link: "", summary: "Please try again later." }]);
     }
   };
 
   return (
-    <div>
-      <h1>AI Chatbot</h1>
-      <form onSubmit={handleSubmit}>
+    <div className="chatbot-container">
+      <h1 className="chatbot-title">AI Chatbot</h1>
+      <form className="chatbot-form" onSubmit={handleSubmit}>
         <input
+          className="chatbot-input"
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Ask a financial question..."
         />
-        <button type="submit">Ask</button>
+        <button className="chatbot-button" type="submit">Ask</button>
       </form>
 
-      <div>
-        <h3>AI Summary:</h3>
-        <p>{aiSummary ? aiSummary : "Generating summary..."}</p>
-
-        <h3>Videos Used for Summary</h3>
+      <div className="chatbot-responses">
         {response.length > 0 ? (
-          <ul>
-            {response.map((item, index) => (
-              <li key={index}>
-                <h4>{item.video_title}</h4>
-                <p>{item.summary}</p>
-                {item.youtube_link && (
-                  <a href={item.youtube_link} target="_blank" rel="noopener noreferrer">
-                    Watch Video
-                  </a>
-                )}
-              </li>
-            ))}
-          </ul>
+          response.map((item, index) => (
+            <div key={index} className="response-card">
+              <h4>{item.video_title}</h4>
+              <p>{item.summary}</p>
+              {item.youtube_link && (
+                <a className="response-link" href={item.youtube_link} target="_blank" rel="noopener noreferrer">
+                  Watch Video
+                </a>
+              )}
+            </div>
+          ))
         ) : (
           <p>No videos found.</p>
         )}
