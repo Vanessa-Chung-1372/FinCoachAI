@@ -1,4 +1,5 @@
 from google import genai
+from typing import List
 from app.config import settings
 from app.services.youtube import search_youtube_videos, get_video_transcript
 
