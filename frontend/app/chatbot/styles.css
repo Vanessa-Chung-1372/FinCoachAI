@@ -1,12 +1,23 @@
 /* Chatbot Container */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #007bff, #6610f2);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
 .chatbot-container {
-    max-width: 700px;
-    margin: 20px auto;
-    padding: 20px;
+    max-width: 900px;  /* ✅ Increased width for better layout */
+    width: 90%;        /* ✅ Ensures responsiveness */
+    margin: 30px auto; /* ✅ Centers it */
+    padding: 30px;     /* ✅ More padding for better spacing */
     font-family: Arial, sans-serif;
     background: #f8f9fa;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 12px; /* ✅ Slightly rounder corners */
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
   }
   
   /* Title */
@@ -119,7 +130,7 @@
   }
   
   .note-button:hover {
-    background-color: #218838;
+    background-color: #CD5C5C;
   }
   
   /* Notes List */
@@ -148,7 +159,7 @@
   
   .delete-note-button {
     padding: 8px 12px;
-    background-color: #dc3545;
+    background-color: #CD5C5C;
     color: white;
     border: none;
     border-radius: 6px;
