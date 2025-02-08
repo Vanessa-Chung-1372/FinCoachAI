@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import axios from "axios";
 
@@ -8,8 +9,13 @@ export default function Chatbot() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await axios.post("/api/chatbot", { query });
-    setResponse(res.data.response);
+    const res = await axios.post("http://localhost:8000/chatbot", { query });
+    if (res.data && res.data.response) {
+      // Assuming the backend returns an object with a 'summary' field
+      setResponse(res.data.response.summary || "No summary available");
+    } else {
+      setResponse("No response received.");
+    }
   };
 
   return (

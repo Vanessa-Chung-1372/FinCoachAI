@@ -7,7 +7,7 @@ class ChatbotRequest(BaseModel):
 
 router = APIRouter()
 
-@router.post("/chat")
+@router.post("/")
 async def chat_endpoint(request: ChatbotRequest):
     try:
         # 1. Generate keywords based on
@@ -20,7 +20,7 @@ async def chat_endpoint(request: ChatbotRequest):
             if video_summary:
                 summaries.extend(video_summary)
 
-        return {"results": summaries}
+        return {"response": summaries}
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
