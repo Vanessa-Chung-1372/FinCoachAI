@@ -7,10 +7,15 @@ class TranscriptRequest(BaseModel):
 
 router = APIRouter()
 
+
+
 @router.post("/classify")
 def classify(request: TranscriptRequest):
     category = classify_topic(request.transcript)
     return {"category": category}
+
+
+
 
 @router.post("/summarize")
 def summarize(request: TranscriptRequest):
