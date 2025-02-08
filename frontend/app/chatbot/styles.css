@@ -128,3 +128,115 @@ body {
     color: #0056b3;
     text-decoration: underline;
   }
+
+  .game-plan {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+  }
+  
+  .game-plan h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #333;
+  }
+  
+  .game-plan p {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    color: #555;
+  }
+  
+  .game-plan ol {
+    padding-left: 20px;
+  }
+  
+  .game-plan li {
+    margin-bottom: 15px;
+  }
+  
+  .game-plan li strong {
+    font-size: 1.1rem;
+    color: #007bff;
+  }
+  
+  .game-plan ul {
+    margin-top: 8px;
+    padding-left: 20px;
+  }
+  
+  .game-plan ul li {
+    list-style-type: disc;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    color: #555;
+  }
+  
+  .game-plan-button,
+.return-button {
+  display: block;
+  margin: 15px auto;
+  padding: 10px 15px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.game-plan-button:hover,
+.return-button:hover {
+  background: #0056b3;
+}
+
+.hide-button {
+  background: #dc3545;
+}
+
+.hide-button:hover {
+  background: #c82333;
+}
+
+.game-plan {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.chatbot-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.chatbot-input {
+  flex: 1;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+}
+
+.chatbot-button {
+  padding: 12px 20px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.chatbot-button:hover {
+  background: #0056b3;
+}
