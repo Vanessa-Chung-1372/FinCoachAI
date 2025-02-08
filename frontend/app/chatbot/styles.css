@@ -1,7 +1,7 @@
 /* styles.css */
 body {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(to right, #007bff, #6610f2);
+    background: linear-gradient(to right, #007bff, #6610f2); /* Gradient background */
     margin: 0;
     padding: 0;
     display: flex;
@@ -69,6 +69,8 @@ body {
 }
 
 .response-card {
+    display: flex; /* Align thumbnail and content horizontally */
+    gap: 15px; /* Space between thumbnail and content */
     background: #f9f9f9;
     padding: 15px;
     margin-bottom: 12px;
@@ -82,9 +84,23 @@ body {
     transform: scale(1.02);
 }
 
+.response-thumbnail {
+    width: 100px; /* Thumbnail width */
+    height: 75px; /* Thumbnail height */
+    border-radius: 8px; /* Match card's rounded style */
+    object-fit: cover; /* Ensure thumbnails are proportional */
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
 .response-card h4 {
     margin: 0 0 8px;
     color: #333;
+}
+
+.response-card p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #555;
 }
 
 .response-link {
@@ -100,3 +116,15 @@ body {
     text-decoration: underline;
     color: #0056b3;
 }
+.response-title {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .response-title:hover {
+    color: #0056b3;
+    text-decoration: underline;
+  }
