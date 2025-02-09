@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import gamePlan from "../../data/gamePlan.json"; // Static JSON import
 import "./styles.css";
 
@@ -8,15 +8,24 @@ export default function Chatbot() {
   const [response, setResponse] = useState([]);
   const [showGamePlanButton, setShowGamePlanButton] = useState(false);
   const [showGamePlan, setShowGamePlan] = useState(false);
-  const [searchSubmitted, setSearchSubmitted] = useState(false); // Tracks if a question was asked
+  const [searchSubmitted, setSearchSubmitted] = useState(false);
+
+  // Note-taking state
+  const [notes, setNotes] = useState([]);
+  const [noteText, setNoteText] = useState("");
+
+  useEffect(() => {
+    // Load saved notes from local storage
+    const savedNotes = JSON.parse(localStorage.getItem("notes")) || [];
+    setNotes(savedNotes);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!query.trim()) return;
 
-    if (!query.trim()) return; // Prevent empty submissions
-
-    setShowGamePlanButton(true); // Show "View Investing Game Plan" button
-    setSearchSubmitted(true); // Hide search bar
+    setShowGamePlanButton(true);
+    setSearchSubmitted(true);
 
     try {
       const res = [
@@ -49,9 +58,8 @@ export default function Chatbot() {
           youtube_link: "https://www.youtube.com/watch?v=66WChsYJ8C4",
           summary: "Kenji teaches how to build a three-statement financial model in Excel, using a lemonade stand as an example.",
           thumbnail: "https://img.youtube.com/vi/66WChsYJ8C4/maxresdefault.jpg",
-        }
+        },
       ];
-
       setResponse(res);
     } catch (error) {
       console.error("Chatbot API error:", error);
@@ -59,7 +67,6 @@ export default function Chatbot() {
     }
   };
 
-  // Reset the chatbot to its initial state
   const handleReturn = () => {
     setQuery("");
     setResponse([]);
@@ -68,18 +75,45 @@ export default function Chatbot() {
     setSearchSubmitted(false);
   };
 
+  const handleNoteSubmit = (e) => {
+    e.preventDefault();
+    if (!noteText.trim()) return;
+
+    const newNotes = [...notes, noteText];
+    setNotes(newNotes);
+    setNoteText("");
+    localStorage.setItem("notes", JSON.stringify(newNotes));
+  };
+
+  const handleNoteDelete = (index) => {
+    const newNotes = notes.filter((_, i) => i !== index);
+    setNotes(newNotes);
+    localStorage.setItem("notes", JSON.stringify(newNotes));
+  };
+
   return (
     <div className="chatbot-container">
-      <h1 className="chatbot-title">AI Chatbot</h1>
+      {/* Header Section */}
+      <header className="header">
+        <h1 className="title">Welcome to FinCoach AI</h1>
+        <p className="subtitle">Your personalized financial coach.</p>
+      </header>
 
-      {/* Show "View Game Plan" button at the top after user submits a question */}
-      {showGamePlanButton && !showGamePlan && (
-        <button className="game-plan-button" onClick={() => setShowGamePlan(true)}>
-          📜 View Investing Game Plan
+      {/* Return Button */}
+      {searchSubmitted && (
+        <button className="return-button" onClick={handleReturn}>
+          Go Back
         </button>
       )}
 
-      {/* Show Game Plan when button is clicked */}
+      {/* Game Plan Button */}
+      {showGamePlanButton && !showGamePlan && (
+        <button className="game-plan-button large-button" onClick={() => setShowGamePlan(true)}>
+          📜 View Your Customized Finance Game Plan
+        </button>
+      )}
+
+      {/* Game Plan Section */}
       {showGamePlan && (
         <div className="game-plan">
           <h2>{gamePlan.title}</h2>
@@ -97,15 +131,13 @@ export default function Chatbot() {
             ))}
           </ol>
           <p>{gamePlan.conclusion}</p>
-
-          {/* Button to hide game plan */}
           <button className="game-plan-button hide-button" onClick={() => setShowGamePlan(false)}>
             🙈 Hide Investing Game Plan
           </button>
         </div>
       )}
 
-      {/* Hide the search bar once the result is returned */}
+      {/* Search Form */}
       {!searchSubmitted && (
         <form className="chatbot-form" onSubmit={handleSubmit}>
           <input
@@ -115,16 +147,34 @@ export default function Chatbot() {
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Ask a financial question..."
           />
-          <button className="chatbot-button" type="submit">Ask</button>
+          <button className="chatbot-button" type="submit">
+            Ask
+          </button>
         </form>
       )}
 
-      {/* Show the chatbot responses */}
+      {/* Powered By Section */}
+      {!searchSubmitted && (
+        <div className="powered-by">
+          <p className="subtitle">Powered by insights from:</p>
+          <div className="logo-container">
+            <img src="/logo/youtube.png" alt="YouTube Logo" className="logo" />
+            <img src="/logo/gemini.png" alt="Gemini Logo" className="logo" />
+            <img src="/logo/google.png" alt="Google Logo" className="logo" />
+          </div>
+        </div>
+      )}
+
+      {/* Chatbot Responses */}
       <div className="chatbot-responses">
-        {response.length > 0 ? (
+        {response.length > 0 &&
           response.map((item, index) => (
             <div key={index} className="response-card">
-              <img className="response-thumbnail" src={item.thumbnail} alt={`Thumbnail for ${item.video_title}`} />
+              <img
+                className="response-thumbnail"
+                src={item.thumbnail}
+                alt={`Thumbnail for ${item.video_title}`}
+              />
               <div>
                 <a className="response-title" href={item.youtube_link} target="_blank" rel="noopener noreferrer">
                   {item.video_title}
@@ -132,17 +182,35 @@ export default function Chatbot() {
                 <p>{item.summary}</p>
               </div>
             </div>
-          ))
-        ) : (
-          <p>No videos found.</p>
-        )}
+          ))}
       </div>
 
-      {/* Show return button only when results are displayed */}
+      {/* Note-Taking Section (Visible After Search) */}
       {searchSubmitted && (
-        <button className="return-button" onClick={handleReturn}>
-          🔄 Return & Ask Another Question
-        </button>
+        <div className="note-taker">
+          <h2 className="note-taker-title">Notes</h2>
+          <form className="note-form" onSubmit={handleNoteSubmit}>
+            <textarea
+              className="note-input"
+              value={noteText}
+              onChange={(e) => setNoteText(e.target.value)}
+              placeholder="Write your notes here..."
+            />
+            <button className="note-button" type="submit">
+              Save Note
+            </button>
+          </form>
+          <div className="notes-list">
+            {notes.map((note, index) => (
+              <div key={index} className="note-card">
+                <p>{note}</p>
+                <button className="delete-note-button" onClick={() => handleNoteDelete(index)}>
+                  Delete
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
       )}
     </div>
   );
