@@ -1,5 +1,6 @@
 __pycache__/*
 dev_key.json
 .env
+.env.local
 frontend/.next/*
 frontend/node_modules/*

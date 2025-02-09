@@ -15,16 +15,20 @@ async def search_youtube_videos(query: str, max_results: int = 3, min_views: int
         ).execute()
 
         videos = []
-        for item in response["items"]:
-            video_id = item["id"]["videoId"]
-            title = item["snippet"]["title"]
-            # Basic relevance score (can be improved)
-            relevance_score = title.lower().count(query.lower())
-            videos.append({
-                "video_id": video_id,
-                "title": title,
-                "relevance_score": relevance_score
-            })
+        for item in response.get("items", []):
+            video_id = item.get("id", {}).get("videoId")
+            title = item.get("snippet", {}).get("title", "No Title")
+            description = item.get("snippet", {}).get("description", "No Description")
+            thumbnail_url = item.get("snippet", {}).get("thumbnails", {}).get("high", {}).get("url", "")
+
+            # Ensure video_id exists before appending
+            if video_id:
+                videos.append({
+                    "video_id": video_id,
+                    "title": title,
+                    "description": description,
+                    "thumbnail_url": thumbnail_url
+                })
 
         # Filter videos based on minimum view count (This requires another API call per video)
         filtered_videos = []
