@@ -1,10 +1,11 @@
-import os
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
-    YOUTUBE_API_KEY: str = os.getenv("YOUTUBE_API_KEY")
-    GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY")
-    FIREBASE_CREDENTIALS: str = os.getenv("FIREBASE_CREDENTIALS")
-    PORT: int = 8000
+    YOUTUBE_API_KEY: str
+    GEMINI_API_KEY: str
+    FIREBASE_CREDENTIALS: str
+    PORT: int = 8000  # Default value for PORT
+
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
 settings = Settings()

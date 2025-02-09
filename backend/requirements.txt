@@ -1,0 +1,8 @@
+fastapi>=0.100.0
+uvicorn==0.15.0  # Or a newer version if available
+pydantic>=2.0.0
+google-cloud-aiplatform  # Correct package for generative AI
+google-api-python-client==2.26.1 # Consider updating if possible
+youtube-transcript-api==0.4.4 # Or a newer version if available
+firebase-admin  # Install the latest version
+python-dotenv>=0.21.0 # Or a newer version if available
