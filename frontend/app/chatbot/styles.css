@@ -1,4 +1,4 @@
-/* styles.css */
+/* General Styles */
 body {
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(to right, #007bff, #6610f2); /* Gradient background */
@@ -18,8 +18,10 @@ body {
     border-radius: 12px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
     text-align: center;
+    position: relative; /* Needed for positioning the return button */
 }
 
+/* Chatbot Title */
 .chatbot-title {
     font-size: 2rem;
     font-weight: bold;
@@ -27,6 +29,59 @@ body {
     color: #333;
 }
 
+/* Return Button (Fixed to Top Left) */
+/* Go Back Button (Neutral Grey, Top Left) */
+.return-button {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 8px 12px;
+    background: #6c757d; /* Neutral grey background */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: background 0.3s, transform 0.2s;
+}
+
+.return-button:hover {
+    background: #5a6268; /* Darker grey on hover */
+    transform: scale(1.05); /* Slight scaling effect */
+}
+
+
+/* Game Plan Button (Larger & More Noticeable) */
+.game-plan-button {
+    display: block;
+    margin: 20px auto;
+    padding: 14px 22px;
+    background: #ffcc00; /* Bright yellow for visibility */
+    color: black;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.game-plan-button:hover {
+    background: #e6b800;
+    transform: scale(1.05);
+}
+
+.hide-button {
+    background: #dc3545;
+}
+
+.hide-button:hover {
+    background: #c82333;
+}
+
+/* Chatbot Form */
 .chatbot-form {
     display: flex;
     gap: 10px;
@@ -63,14 +118,15 @@ body {
     background: #0056b3;
 }
 
+/* Chatbot Responses */
 .chatbot-responses {
     margin-top: 20px;
     text-align: left;
 }
 
 .response-card {
-    display: flex; /* Align thumbnail and content horizontally */
-    gap: 15px; /* Space between thumbnail and content */
+    display: flex;
+    gap: 15px;
     background: #f9f9f9;
     padding: 15px;
     margin-bottom: 12px;
@@ -85,11 +141,11 @@ body {
 }
 
 .response-thumbnail {
-    width: 100px; /* Thumbnail width */
-    height: 75px; /* Thumbnail height */
-    border-radius: 8px; /* Match card's rounded style */
-    object-fit: cover; /* Ensure thumbnails are proportional */
-    flex-shrink: 0; /* Prevent shrinking */
+    width: 100px;
+    height: 75px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
 }
 
 .response-card h4 {
@@ -103,28 +159,187 @@ body {
     color: #555;
 }
 
-.response-link {
-    display: inline-block;
-    margin-top: 10px;
-    color: #007bff;
-    font-weight: bold;
-    text-decoration: none;
-    transition: color 0.3s;
-}
-
-.response-link:hover {
-    text-decoration: underline;
-    color: #0056b3;
-}
+/* Links */
+.response-link,
 .response-title {
     font-size: 1rem;
     font-weight: bold;
     color: #007bff;
     text-decoration: none;
     transition: color 0.3s;
-  }
-  
-  .response-title:hover {
+}
+
+.response-link:hover,
+.response-title:hover {
     color: #0056b3;
     text-decoration: underline;
+}
+
+/* Game Plan Section */
+.game-plan {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.game-plan h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.game-plan p {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    color: #555;
+}
+
+.game-plan ol {
+    padding-left: 20px;
+}
+
+.game-plan li {
+    margin-bottom: 15px;
+}
+
+.game-plan li strong {
+    font-size: 1.1rem;
+    color: #007bff;
+}
+
+.game-plan ul {
+    margin-top: 8px;
+    padding-left: 20px;
+}
+
+.game-plan ul li {
+    list-style-type: disc;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    color: #555;
+}
+
+/* Powered By Section */
+.powered-by {
+    text-align: center;
+    margin-top: 20px;
   }
+  
+  .subtitle {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 10px;
+  }
+  
+  .logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .logo {
+    width: 30px; /* Adjust size of logos */
+    height: auto;
+    transition: transform 0.3s; /* Smooth scaling effect */
+  }
+  
+  .logo:hover {
+    transform: scale(1.1); /* Slight zoom effect */
+  }
+  
+  /* General Note Section Styling */
+.note-taker {
+    margin-top: 20px; /* Space above the note-taker section */
+    background: #f9f9f9; /* Light background for the note section */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+  }
+  
+  .note-taker-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+  }
+  
+  .note-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between the textarea and the button */
+  }
+  
+  .note-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    resize: vertical; /* Allow vertical resizing */
+    min-height: 80px;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  
+  .note-input:focus {
+    border-color: #007bff; /* Blue border on focus */
+  }
+  
+  .note-button {
+    align-self: flex-end; /* Align the button to the right */
+    padding: 10px 15px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background 0.3s;
+  }
+  
+  .note-button:hover {
+    background: #0056b3;
+  }
+  
+  .notes-list {
+    margin-top: 20px;
+  }
+  
+  .note-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+  }
+  
+  .note-card p {
+    margin: 0;
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .delete-note-button {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    transition: background 0.3s;
+  }
+  
+  .delete-note-button:hover {
+    background: #c82333;
+  }
+  
