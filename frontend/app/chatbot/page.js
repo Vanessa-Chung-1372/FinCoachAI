@@ -1,13 +1,14 @@
 "use client";
 import { useState, useEffect } from "react";
+import axios from "axios";
 import gamePlan from "../../data/gamePlan.json"; // Static JSON import
 import "./styles.css";
 import videoData from "../../data/chatbotData.json";
 
 export default function Chatbot() {
   const [query, setQuery] = useState("");
-  const [response, setResponse] = useState([]);
-  // const [gamePlan, setGamePlan] = useState([]);
+  const [summaries, setSummaries] = useState([]);
+  const [gamePlan, setGamePlan] = useState([]);
   const [showGamePlanButton, setShowGamePlanButton] = useState(false);
   const [showGamePlan, setShowGamePlan] = useState(false);
   const [searchSubmitted, setSearchSubmitted] = useState(false);
@@ -30,25 +31,27 @@ export default function Chatbot() {
     setSearchSubmitted(true);
 
     try {
-      // const res = await axios.post("http://localhost:8000/chatbot", { query });
+      const res = await axios.post("http://localhost:8000/chatbot", { query });
 
-      // if (res.data && Array.isArray(res.data.response)) {
-      //   setResponse(res.data.response); // Store the array of objects
-      // } else {
-      //   setResponse([{ video_title: "No response received", youtube_link: "", summary: "" }]);
-      // }
+      if (res.data && Array.isArray(res.data.summaries)) {
+        setSummaries(res.data.summaries); // Store the array of objects
+        setGamePlan(res.data.plan);
+      } else {
+        setSummaries([{ video_title: "No response received", youtube_link: "", summary: "" }]);
+      }
 
-      setResponse(videoData);
+      // setResponse(videoData);
 
     } catch (error) {
       console.error("Chatbot API error:", error);
-      setResponse([{ video_title: "Error fetching response", youtube_link: "", summary: "Please try again later." }]);
+      setSummaries([{ video_title: "Error fetching response", youtube_link: "", summary: "Please try again later." }]);
     }
   };
 
   const handleReturn = () => {
     setQuery("");
-    setResponse([]);
+    setSummaries([]);
+    setGamePlan([]);
     setShowGamePlanButton(false);
     setShowGamePlan(false);
     setSearchSubmitted(false);
@@ -146,8 +149,8 @@ export default function Chatbot() {
 
       {/* Chatbot Responses */}
       <div className="chatbot-responses">
-        {response.length > 0 &&
-          response.map((item, index) => (
+        {summaries.length > 0 &&
+          summaries.map((item, index) => (
             <div key={index} className="response-card">
               <img
                 className="response-thumbnail"
